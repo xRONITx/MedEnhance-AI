@@ -1,0 +1,136 @@
+{
+  "dataset_root": "C:\\Users\\LENOVO\\Downloads\\Design Thinking And Innovation\\chest_xray",
+  "model_path": "C:\\Users\\LENOVO\\Downloads\\Design Thinking And Innovation\\project\\saved_models\\classifier.pth",
+  "development_split": {
+    "train_samples": 4447,
+    "val_samples": 785,
+    "test_samples": 624,
+    "val_fraction": 0.15,
+    "seed": 42
+  },
+  "best_epoch": 5,
+  "best_threshold": 0.25000000000000006,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.3207015315431382,
+      "val_loss": 0.27480849376909294,
+      "val_accuracy": 0.9719745222929936,
+      "val_precision": 0.9929701230228472,
+      "val_recall": 0.9691252144082333,
+      "val_f1": 0.9809027777777778,
+      "threshold": 0.2,
+      "score": 0.976476683218436
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.18388303839908388,
+      "val_loss": 0.3409125256310603,
+      "val_accuracy": 0.9375796178343949,
+      "val_precision": 0.9962825278810409,
+      "val_recall": 0.9193825042881647,
+      "val_f1": 0.9562890276538805,
+      "threshold": 0.2,
+      "score": 0.9433461296622172
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.16444952318862446,
+      "val_loss": 0.22983499962812776,
+      "val_accuracy": 0.9745222929936306,
+      "val_precision": 0.9947275922671354,
+      "val_recall": 0.9708404802744426,
+      "val_f1": 0.9826388888888888,
+      "threshold": 0.2,
+      "score": 0.978287706715029
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.15668701174582475,
+      "val_loss": 0.24414458016681065,
+      "val_accuracy": 0.9681528662420382,
+      "val_precision": 0.99644128113879,
+      "val_recall": 0.9605488850771869,
+      "val_f1": 0.9781659388646288,
+      "threshold": 0.23000000000000004,
+      "score": 0.971879515466137
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.1371485030608202,
+      "val_loss": 0.18933591379481515,
+      "val_accuracy": 0.9936305732484076,
+      "val_precision": 0.9948630136986302,
+      "val_recall": 0.9965694682675815,
+      "val_f1": 0.9957155098543273,
+      "threshold": 0.25000000000000006,
+      "score": 0.9957632037177115
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.13511131940087442,
+      "val_loss": 0.20005823837913525,
+      "val_accuracy": 0.9885350318471338,
+      "val_precision": 0.993127147766323,
+      "val_recall": 0.9914236706689536,
+      "val_f1": 0.992274678111588,
+      "threshold": 0.22000000000000003,
+      "score": 0.9916454112523524
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.12724982927173664,
+      "val_loss": 0.19299910791740296,
+      "val_accuracy": 0.9885350318471338,
+      "val_precision": 0.9948275862068966,
+      "val_recall": 0.9897084048027445,
+      "val_f1": 0.9922613929492692,
+      "threshold": 0.25000000000000006,
+      "score": 0.9911228603950982
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.12215599897358427,
+      "val_loss": 0.19531954625609574,
+      "val_accuracy": 0.9859872611464968,
+      "val_precision": 0.9948096885813149,
+      "val_recall": 0.9862778730703259,
+      "val_f1": 0.9905254091300603,
+      "threshold": 0.2,
+      "score": 0.9887973335137836
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.12235706924976647,
+      "val_loss": 0.20002552980829955,
+      "val_accuracy": 0.9847133757961783,
+      "val_precision": 0.9965217391304347,
+      "val_recall": 0.9828473413379074,
+      "val_f1": 0.9896373056994818,
+      "threshold": 0.21000000000000002,
+      "score": 0.987107923400679
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.11793286303589792,
+      "val_loss": 0.2121941303941095,
+      "val_accuracy": 0.9821656050955414,
+      "val_precision": 0.9982486865148862,
+      "val_recall": 0.9777015437392796,
+      "val_f1": 0.9878682842287695,
+      "threshold": 0.2,
+      "score": 0.9842479941685998
+    }
+  ],
+  "test_metrics": {
+    "accuracy": 0.844551282051282,
+    "precision": 0.8020618556701031,
+    "recall": 0.9974358974358974,
+    "f1": 0.8891428571428571,
+    "loss": 0.4720743032984244
+  },
+  "classes": [
+    "NORMAL",
+    "PNEUMONIA"
+  ]
+}

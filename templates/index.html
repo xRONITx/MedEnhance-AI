@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedEnhance AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <main class="app-shell">
+        <header class="hero-header">
+            <div>
+                <p class="hero-kicker">MedEnhance AI</p>
+                <h1>AI-assisted Chest X-ray Analysis</h1>
+                <p class="hero-subtitle">A professional imaging review interface for guided medical screening.</p>
+            </div>
+            <div class="system-status {% if status.ready %}ready{% else %}warning{% endif %}">
+                <span class="status-dot"></span>
+                <span>{{ status.status_text }}</span>
+            </div>
+        </header>
+
+        <section class="panel upload-panel">
+            <div class="section-head">
+                <div>
+                    <h2>Upload Image</h2>
+                    <p>Upload a chest X-ray image to begin analysis.</p>
+                </div>
+            </div>
+
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <div class="drop-zone-content">
+                    <strong>Upload Chest X-ray Image</strong>
+                    <span>Drag and drop or click to upload</span>
+                </div>
+            </div>
+
+            <div class="upload-toolbar">
+                <button type="button" id="browseBtn" class="secondary-btn">Choose Image</button>
+                <div class="selected-file" id="selectedFile">No image selected</div>
+            </div>
+        </section>
+
+        <section class="panel preview-panel" id="previewPanel" hidden>
+            <div class="section-head">
+                <div>
+                    <h2>Original Image</h2>
+                    <p>Review the uploaded X-ray before starting analysis.</p>
+                </div>
+            </div>
+
+            <div class="preview-frame">
+                <img id="previewImg" alt="Uploaded chest X-ray preview">
+            </div>
+
+            <div class="analysis-toolbar">
+                <button type="button" id="predictBtn" class="primary-btn" disabled>Start Analysis</button>
+                <div class="loading-row" id="loaderWrap" hidden>
+                    <div class="spinner"></div>
+                    <span>Analyzing image...</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel results-panel" id="resultsPanel" hidden>
+            <div class="section-head">
+                <div>
+                    <h2>Analysis Results</h2>
+                    <p>Original image, enhanced view, and diagnostic heatmap.</p>
+                </div>
+            </div>
+
+            <div class="results-grid" id="resultsGrid">
+                <article class="image-card">
+                    <div class="card-head">
+                        <h3>Original</h3>
+                        <span>Uploaded chest X-ray image</span>
+                    </div>
+                    <img id="originalImg" alt="Original chest X-ray">
+                </article>
+
+                <article class="image-card">
+                    <div class="card-head">
+                        <h3>Enhanced</h3>
+                        <span>Improved image clarity</span>
+                    </div>
+                    <img id="enhancedImg" alt="Enhanced chest X-ray">
+                </article>
+
+                <article class="image-card emphasis-card">
+                    <div class="card-head">
+                        <h3>Heatmap</h3>
+                        <span>Areas influencing diagnosis</span>
+                    </div>
+                    <img id="heatmapImg" alt="Heatmap image">
+                </article>
+            </div>
+        </section>
+
+        <section class="panel summary-panel" id="summaryPanel" hidden>
+            <div class="section-head">
+                <h2>Diagnosis</h2>
+                <div class="result-badge neutral" id="statusChip">Analysis complete</div>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <span class="label">Result</span>
+                    <strong id="resultText">-</strong>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Confidence Level</span>
+                    <strong id="confidenceText">-</strong>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Classification</span>
+                    <strong id="labelText">-</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel influence-panel" id="influencePanel" hidden>
+            <div class="section-head">
+                <div>
+                    <h2>What Influenced the Model Decision</h2>
+                    <p>Highlighted regions that contributed most to the final classification.</p>
+                </div>
+            </div>
+
+            <div class="influence-layout">
+                <div class="focus-card">
+                    <img id="focusImg" alt="Highlighted heatmap focus area">
+                </div>
+                <div class="explanation-block">
+                    <h3>Areas influencing diagnosis</h3>
+                    <p id="explanationText">The explanation for this scan will appear here after analysis.</p>
+                    <div class="disclaimer-box">
+                        <strong>Clinical reminder</strong>
+                        <p>This tool assists medical professionals and does not replace professional diagnosis.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="message-banner error" id="errorBanner" hidden></div>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
