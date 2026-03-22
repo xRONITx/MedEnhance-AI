@@ -1,11 +1,33 @@
 # MedEnhance AI
 
-MedEnhance AI is a Flask-based medical image analysis system for chest X-rays. It includes:
+MedEnhance AI is an AI-assisted chest X-ray analysis web application built to support medical image review with a clean clinical workflow. The system combines image enhancement, pneumonia screening, confidence reporting, and visual explanation into a single professional web interface.
 
-- A CNN enhancement model trained on artificially degraded X-rays
-- A binary pneumonia classifier built on pretrained ResNet18
-- Real Grad-CAM visualization on the classifier's last convolutional layer
-- A polished drag-and-drop web interface for end-to-end inference
+It is designed as an academic and demonstration-ready healthcare AI project, with a modular training pipeline and an explainable inference workflow that helps users understand what influenced the model's decision.
+
+## Highlights
+
+- Chest X-ray upload and guided analysis workflow
+- Medical image enhancement for clearer visual review
+- Pneumonia detection using a ResNet18-based classifier
+- Grad-CAM heatmap visualization for explainability
+- Confidence scoring and diagnosis summary
+- Professional single-page medical interface
+- Modular training scripts for classifier and enhancer
+- Flask-based deployment-ready application structure
+
+## Tech Stack
+
+- Python
+- Flask
+- PyTorch
+- Torchvision
+- NumPy
+- Pillow
+- scikit-image
+- scikit-learn
+- HTML
+- CSS
+- JavaScript
 
 ## Project Structure
 
@@ -14,19 +36,17 @@ project/
 |-- app.py
 |-- training/
 |   |-- train_classifier.py
-|   |-- train_enhancer.py
-|   `-- train_model.py
+|   `-- train_enhancer.py
 |-- model/
 |   |-- classifier.py
-|   |-- enhancer.py
-|   `-- model.py
+|   `-- enhancer.py
 |-- utils/
-|   |-- preprocess.py
 |   |-- gradcam.py
-|   `-- metrics.py
+|   |-- metrics.py
+|   `-- preprocess.py
 |-- static/
-|   |-- styles.css
-|   `-- script.js
+|   |-- script.js
+|   `-- styles.css
 |-- templates/
 |   `-- index.html
 |-- uploads/
@@ -35,14 +55,16 @@ project/
 |   `-- heatmaps/
 |-- saved_models/
 |   |-- classifier.pth
-|   `-- enhancer.pth
+|   |-- classifier_metrics.json
+|   |-- enhancer.pth
+|   `-- enhancer_metrics.json
 |-- requirements.txt
 `-- README.md
 ```
 
 ## Dataset
 
-The training scripts auto-detect either of these layouts:
+The project expects the chest X-ray dataset in one of these layouts:
 
 ```text
 chest_xray/
@@ -61,83 +83,144 @@ chest_xray/
     `-- test/
 ```
 
+The training scripts automatically detect both structures.
+
+## Features
+
+### 1. Image Enhancement
+The project includes a dedicated enhancement model trained on degraded chest X-rays. During training, images are artificially corrupted using noise and resolution degradation so the model learns to reconstruct cleaner outputs.
+
+### 2. Pneumonia Detection
+The classifier is built on ResNet18 and fine-tuned for binary classification:
+- Normal
+- Pneumonia
+
+The improved training pipeline includes:
+- balanced sampling for class imbalance
+- stronger augmentation
+- validation split refinement
+- confidence threshold tuning
+- metric tracking for retraining analysis
+
+### 3. Explainable AI
+The application generates a Grad-CAM heatmap that highlights the regions of the X-ray that most influenced the prediction.
+
+### 4. Clinical Web Workflow
+The web app follows a simple review flow:
+1. Upload image
+2. Preview original X-ray
+3. Start analysis
+4. View enhanced image, heatmap, diagnosis, confidence, and explanation
+
 ## Setup
 
-1. Create and activate a virtual environment.
-2. Install dependencies:
+### 1. Create a virtual environment
+```bash
+python -m venv venv
+```
 
+### 2. Activate the virtual environment
+On Windows:
+```bash
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-## Train The Enhancer
+## Training
 
+### Train the enhancer
 ```bash
 python training/train_enhancer.py
 ```
 
 Optional example:
-
 ```bash
-python training/train_enhancer.py --epochs 12 --batch-size 12 --learning-rate 0.001
+python training/train_enhancer.py --epochs 14 --batch-size 12 --learning-rate 0.0007
 ```
 
-## Train The Classifier
-
+### Train the classifier
 ```bash
 python training/train_classifier.py
 ```
 
 Optional example:
-
 ```bash
-python training/train_classifier.py --epochs 8 --batch-size 16
+python training/train_classifier.py --epochs 16 --batch-size 20 --learning-rate 0.0003
 ```
 
-Notes:
+## Running the Application
 
-- `train_classifier.py` uses pretrained ResNet18 by default.
-- Torchvision may download ImageNet weights on the first run if they are not cached.
-- Best checkpoints are saved to `saved_models/classifier.pth` and `saved_models/enhancer.pth`.
-- Metric summaries are written to `saved_models/classifier_metrics.json` and `saved_models/enhancer_metrics.json`.
-
-## Run The Web App
-
-After both models are trained:
+After the required models are available:
 
 ```bash
 python app.py
 ```
 
-Then open:
+Open the app in your browser:
 
 ```text
 http://127.0.0.1:5000
 ```
 
-## Inference Pipeline
+## Inference Workflow
 
-1. Upload chest X-ray
-2. Enhance image with the trained U-Net enhancer
-3. Classify the enhanced image with ResNet18
-4. Generate Grad-CAM heatmap
-5. Display original image, enhanced image, heatmap, prediction, and confidence
+When a user uploads an X-ray, the application performs the following steps:
 
-## Metrics
+1. Loads the uploaded image
+2. Shows the original image preview
+3. Enhances the image for clearer visual review
+4. Runs the trained classifier
+5. Generates a Grad-CAM heatmap
+6. Displays:
+   - original image
+   - enhanced image
+   - heatmap
+   - diagnosis result
+   - confidence level
+   - explanation text
 
-The project computes:
+## Metrics Tracked
 
+### Classification
 - Accuracy
 - Precision
 - Recall
 - F1 Score
+
+### Enhancement
 - PSNR
 - SSIM
 
-## Recommended Run Order
+Training summaries are stored in:
+- `saved_models/classifier_metrics.json`
+- `saved_models/enhancer_metrics.json`
 
-1. `python training/train_enhancer.py`
-2. `python training/train_classifier.py`
-3. `python app.py`
+## Notes
 
-If the app starts before training, it will still render the interface and report which model files are missing.
+- The application is intended as an AI assistance tool, not as a replacement for professional diagnosis.
+- Generated files in `uploads/` and `outputs/` are runtime artifacts and are not required for source control.
+- Model weight files can be retrained using the included training scripts.
+
+## Recommended Usage Order
+
+1. Install dependencies
+2. Train the enhancer
+3. Train the classifier
+4. Run the Flask app
+5. Test with chest X-ray images
+
+## Future Improvements
+
+- Better calibration and threshold tuning on larger validation sets
+- Multi-condition classification support
+- Cloud deployment
+- User authentication and patient workflow integration
+- Exportable medical report summaries
+
+## Disclaimer
+
+This project is for educational, research, and demonstration purposes only. It should not be used as a standalone clinical diagnostic system.
